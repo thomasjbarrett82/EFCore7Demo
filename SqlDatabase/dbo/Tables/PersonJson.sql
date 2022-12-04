@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[PersonJson]
+(
+	[Id] INT NOT NULL IDENTITY(1,1),
+	[FirstName] VARCHAR(100) NOT NULL,
+	[LastName] VARCHAR(100) NOT NULL,
+	[Addresses] NVARCHAR(MAX) NOT NULL,
+	CONSTRAINT PK_PersonJson PRIMARY KEY ([Id])
+)

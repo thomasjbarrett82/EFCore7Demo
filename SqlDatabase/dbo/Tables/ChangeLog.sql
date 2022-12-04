@@ -1,0 +1,10 @@
+﻿CREATE TABLE [dbo].[ChangeLog]
+(
+	[Id] INT NOT NULL IDENTITY(1,1),
+	[TableName] VARCHAR(100) NOT NULL,
+	[TableKey] INT NOT NULL,
+	[ChangeDetails] NVARCHAR(MAX) NOT NULL,
+	[ChangeType] VARCHAR(16) NOT NULL,
+	[ChangedOn] DATETIME2 NOT NULL,
+	CONSTRAINT PK_ChangeLog PRIMARY KEY ([Id])
+)

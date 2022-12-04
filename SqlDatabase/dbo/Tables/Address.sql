@@ -1,0 +1,11 @@
+﻿CREATE TABLE [dbo].[Address]
+(
+	[Id] INT NOT NULL IDENTITY(1,1),
+	[PersonId] INT NOT NULL,
+	[StreetNumber] VARCHAR(100) NOT NULL,
+	[City] VARCHAR(100) NOT NULL,
+	[State] VARCHAR(100) NOT NULL,
+	[ZipCode] VARCHAR(10) NOT NULL,
+	CONSTRAINT PK_Address PRIMARY KEY ([Id]),
+	CONSTRAINT FK_Address_Person FOREIGN KEY ([PersonId]) REFERENCES [dbo].[Person]([Id])
+)
