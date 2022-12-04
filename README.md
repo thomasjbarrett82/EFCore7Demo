@@ -74,7 +74,7 @@ public class ChangeDetail {
 ### Modify a Person
 
 1. SQL: works as expected.
-2. JSON: **Behavior Not Expected:** Person.State == Modified, which is expected, but then also Address.State == Added, even if no changes were made to the Address.
+2. JSON: **Behavior Not Expected:** Person.State == Modified, which is expected, but then also Address.State == Added, even if no changes were made to the Address. I would expect Address.State to be either Unchanged or Modified. Unchanged would be ignored, and Modified should trigger a comparison of OriginalValue and CurrentValue, which should come back empty and not log any changes.
 
 ### Modify an Address
 
