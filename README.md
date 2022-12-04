@@ -31,6 +31,13 @@ public class Address {
     public int PersonId { get; set; }
 }
 
+public class AddressJson {
+    public string StreetNumber { get; set; }
+    public string City { get; set; }
+    public string State { get; set; }
+    public string ZipCode { get; set; }
+}
+
 public class ChangeLog {
     public int Id { get; set; }
     public string TableName { get; set; }
