@@ -62,7 +62,6 @@ public static class DbContextExtensions {
                 continue;
             }
             // changed properties
-            // TODO nested SQL objects are Modified state, but don't have the original value, why?
             if (prop.IsModified && prop.OriginalValue != null && !prop.OriginalValue.Equals(prop.CurrentValue))
                 details.Add(new ChangeDetail {
                     PropertyName = prop.Metadata.Name,

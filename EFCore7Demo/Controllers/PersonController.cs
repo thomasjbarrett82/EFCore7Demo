@@ -44,6 +44,7 @@ namespace EFCore7Demo.Controllers {
             if (!ModelState.IsValid)
                 return BadRequest();
 
+            // upsert Person
             var entity = await _context.Persons.FirstOrDefaultAsync(p => p.Id == request.Id);
             if (entity is null) {
                 _context.Persons.Add(request);
@@ -51,8 +52,25 @@ namespace EFCore7Demo.Controllers {
             else {
                 entity.FirstName = request.FirstName;
                 entity.LastName = request.LastName;
-                entity.Addresses = request.Addresses;
-                _context.Update(entity);
+                // upsert Addresses
+                foreach (var address in request.Addresses) {
+                    // upsert
+                    var add = entity.Addresses.FirstOrDefault(a => a.Id == address.Id);
+                    if (add == null) {
+                        entity.Addresses.Add(address);
+                    }
+                    else {
+                        add.StreetNumber = address.StreetNumber;
+                        add.City = address.City;
+                        add.State = address.State;
+                        add.ZipCode= address.ZipCode;
+                    }
+
+                    // delete - not tracking in change log at this time
+                    foreach (var del in entity.Addresses.Where(e => !request.Addresses.Any(r => r.Id == e.Id)).ToList()) {
+                        entity.Addresses.Remove(del);
+                    }
+                }
             }
 
             await _context.SaveChangesAsync();
@@ -66,6 +84,7 @@ namespace EFCore7Demo.Controllers {
             if (!ModelState.IsValid)
                 return BadRequest();
 
+            // upsert Person
             var entity = await _context.PersonJsons.FirstOrDefaultAsync(p => p.Id == request.Id);
             if (entity is null) {
                 _context.PersonJsons.Add(request);
@@ -73,8 +92,25 @@ namespace EFCore7Demo.Controllers {
             else {
                 entity.FirstName = request.FirstName;
                 entity.LastName = request.LastName;
-                entity.Addresses = request.Addresses;
-                _context.Update(entity);
+                // upsert Addresses
+                foreach (var address in request.Addresses) {
+                    // upsert
+                    var add = entity.Addresses.FirstOrDefault(a => a.InternalId == address.InternalId);
+                    if (add == null) {
+                        entity.Addresses.Add(address);
+                    }
+                    else {
+                        add.StreetNumber = address.StreetNumber;
+                        add.City = address.City;
+                        add.State = address.State;
+                        add.ZipCode = address.ZipCode;
+                    }
+
+                    // delete - not tracking in change log at this time
+                    foreach (var del in entity.Addresses.Where(e => !request.Addresses.Any(r => r.InternalId == e.InternalId)).ToList()) {
+                        entity.Addresses.Remove(del);
+                    }
+                }
             }
 
             await _context.SaveChangesAsync();
